@@ -2,8 +2,12 @@ package com.example.user.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by User on 22/12/2017.
@@ -18,6 +22,8 @@ public class UserSQLHelper extends SQLiteOpenHelper {
                     UserContract.User.COLUMN_NAME + " TEXT," +
                     UserContract.User.COLUMN_PHONE + " TEXT," +
                     UserContract.User.COLUMN_EMAIL + " TEXT)";
+
+    private String[] allColumn = {UserContract.User.COLUMN_NAME, UserContract.User.COLUMN_PHONE, UserContract.User.COLUMN_EMAIL};
 
     public UserSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,5 +50,16 @@ public class UserSQLHelper extends SQLiteOpenHelper {
         database.insert(UserContract.User.TABLE_NAME, null, values);
 
         database.close();
+    }
+
+    public List<UserRecord> getAllUsers(){
+
+        List<UserRecord> records = new ArrayList<UserRecord>();
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = database.query(UserContract.User.TABLE_NAME,
+                allColumn,null,null,null,null,null);
+
+        return records;
     }
 }
