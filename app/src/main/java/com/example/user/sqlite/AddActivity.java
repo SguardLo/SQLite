@@ -29,6 +29,7 @@ public class AddActivity extends AppCompatActivity {
         userRecord.setPhone(editTextPhone.getText().toString());
         userRecord.setEmail(editTextEmail.getText().toString());
 
+        //Save Data
         UserSQLHelper userDataSource = new UserSQLHelper(this);
         userDataSource.insertUser(userRecord);
         this.finish();
